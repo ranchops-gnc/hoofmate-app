@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HoofMate — Leoti</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Source+Sans+3:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">
+        <span class="logo">♞</span>
+        <span>HoofMate</span>
+      </div>
+      <nav>
+        <a class="active" href="#">Dashboard</a>
+        <a href="#">Horses</a>
+        <a href="#">Care</a>
+        <a href="#">Health records</a>
+        <a href="#">Rides</a>
+        <a href="#">Pasture &amp; facilities</a>
+        <a href="#">Team</a>
+        <a href="#">Reminders</a>
+        <a href="#">AI assistant</a>
+      </nav>
+      <div class="sidebar-foot">
+        <a href="#">Settings</a>
+        <div class="ranch">Pine Creek Ranch · Colorado</div>
+      </div>
+    </aside>
+    <main>
+      <header class="top">
+        <div>
+          <h1>Good morning, Sean</h1>
+          <p class="muted">Here’s what’s happening at Pine Creek Ranch.</p>
+        </div>
+        <div class="weather">
+          <span>⛅ 52°</span>
+          <span class="muted">Partly cloudy</span>
+        </div>
+      </header>
+      <section class="hero-card">
+        <img class="horse-photo" alt="Leoti" src="https://images.unsplash.com/photo-1553284965-83fd3e82fa5a?auto=format&fit=crop&w=640&q=80" />
+        <div class="hero-meta">
+          <div class="kicker">Mare · Quarter Horse</div>
+          <h2>Leoti</h2>
+          <div class="stats">
+            <div><span>Age</span><strong>8</strong></div>
+            <div><span>Height</span><strong>15.1 hh</strong></div>
+            <div><span>Weight</span><strong>1,080 lb</strong></div>
+            <div><span>Discipline</span><strong>Ranch / trail</strong></div>
+          </div>
+        </div>
+        <div class="hero-actions">
+          <button class="btn ghost">View profile</button>
+          <button class="btn" id="logRide">Log a ride</button>
+        </div>
+      </section>
+      <div class="grid">
+        <section class="card">
+          <h3>Upcoming care</h3>
+          <ul class="timeline">
+            <li><time>Sep 25</time><div><strong>Farrier appointment</strong><span>Trim + shoes · Jake Lane</span></div><em class="tag due">Due soon</em></li>
+            <li><time>Sep 30</time><div><strong>Dewormer</strong><span>Ivermectin · barn aisle</span></div><em class="tag">Upcoming</em></li>
+            <li><time>Oct 05</time><div><strong>Vaccines</strong><span>Fall combo · Dr. Megan Lee</span></div><em class="tag">Upcoming</em></li>
+            <li><time>Oct 12</time><div><strong>Dental float</strong><span>Dr. Megan Lee</span></div><em class="tag">Upcoming</em></li>
+          </ul>
+        </section>
+        <section class="card">
+          <h3>Care overview</h3>
+          <ul class="overview">
+            <li><span>Farrier cycle</span><strong>Every 6 weeks</strong><em class="ok">On track</em></li>
+            <li><span>Dental float</span><strong>Annual</strong><em class="ok">On track</em></li>
+            <li><span>Flu / Rhino</span><strong>Fall + spring</strong><em class="warn">Due Oct 5</em></li>
+            <li><span>Coggins</span><strong>Current</strong><em class="ok">Good through May</em></li>
+          </ul>
+        </section>
+        <section class="card ask">
+          <h3>Ask HoofMate</h3>
+          <p class="muted">Mock AI only — answers come from local ranch notes, not a live model.</p>
+          <div class="chat" id="chat">
+            <div class="bubble bot">Leoti’s farrier is due in two days. Want a packing list for the appointment?</div>
+          </div>
+          <form id="askForm">
+            <input id="askInput" placeholder="Ask about feed, lameness, weather, or rides…" autocomplete="off" />
+            <button type="submit">Ask</button>
+          </form>
+          <div class="chips">
+            <button data-q="Is Leoti ready to ride today?">Ride readiness</button>
+            <button data-q="What should I pack for the farrier?">Farrier checklist</button>
+            <button data-q="Any weather risk this week?">Weather risk</button>
+          </div>
+        </section>
+        <section class="card">
+          <h3>Safety monitor</h3>
+          <div class="toggle-row">
+            <span>Barn-aisle alerts</span>
+            <label class="switch"><input type="checkbox" checked /><span></span></label>
+          </div>
+          <ul class="safety">
+            <li>Barn cam <strong>Online</strong></li>
+            <li>Temperature <strong>58°F</strong></li>
+            <li>Humidity <strong>34%</strong></li>
+            <li>Last barn check <strong>5:40 AM</strong></li>
+          </ul>
+        </section>
+        <section class="card">
+          <h3>Emergency contacts</h3>
+          <ul class="contacts">
+            <li><strong>Dr. Megan Lee</strong><span>Pine Creek Veterinary</span><a href="tel:+13035550112">303-555-0112</a></li>
+            <li><strong>Jake Lane</strong><span>Farrier</span><a href="tel:+17205550188">720-555-0188</a></li>
+            <li><strong>Ranch manager</strong><span>On-call</span><a href="tel:+17205550101">720-555-0101</a></li>
+          </ul>
+        </section>
+      </div>
+    </main>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
