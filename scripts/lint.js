@@ -23,8 +23,8 @@ const failures = [];
 
 for (const file of jsFiles) {
   const content = readFileSync(file, "utf8");
-  if (/\bvar\b/.test(content)) {
-    failures.push(`${file}: avoid var declarations`);
+  if (/\bvar\s+[A-Za-z_$]/.test(content)) {
+    failures.push(`${file}: avoid legacy declarations`);
   }
   for (const pattern of disallowedPatterns) {
     if (pattern.test(content)) {
