@@ -1,44 +1,53 @@
 # HoofMate
 
-AI-powered horse management platform built for ranchers, horse owners, trainers, and rodeo competitors.
+Care Ops Assistant prototype for horse operations teams.
 
-## Mock-only mode (current)
+## Current implementation (data-backed mock)
 
-The DeepSeek share linked from the ChatGPT thread is blocked from this environment (CloudFront 403), so this pass implements the **mock-only AI dashboard** requested there.
+This repository now includes a single-ranch, single-horse operator workflow with a grounded assistant.
 
-Open the static prototype:
+Implemented scope:
+- One ranch and one horse (`Leoti` at Pine Creek Ranch)
+- Data model entities: horses, care events, ride logs, contacts, alerts, tasks, users, audit log
+- Today-focused dashboard: overdue care, next 7-day care schedule, open safety alerts, reminders
+- Quick actions with role-based permissions: mark complete, snooze, assign, log ride
+- Ask HoofMate grounded intents:
+  - show overdue care
+  - show next care window
+  - create reminder (confirmation required)
+  - log ride (confirmation required)
+  - call contact
+- Write operations tracked in audit log
+
+## Run the mock dashboard
 
 ```bash
-cd mock
-python3 -m http.server 4173
-# then visit http://localhost:4173
+cd /home/runner/work/hoofmate-app/hoofmate-app
+npm install
+npm run start:mock
+# visit http://localhost:4173
 ```
 
-What is mocked today:
+## Quality gates
 
-- Horse profile for **Leoti** at Pine Creek Ranch
-- Upcoming care (farrier, dewormer, vaccines, dental)
-- Safety monitor and emergency contacts
-- Ask HoofMate with local canned replies (no live model)
-- Log-a-ride writes a mock note into the chat only
+```bash
+npm run lint
+npm test
+npm run build
+```
 
-## Planned product features
+- `lint`: lightweight static checks for JavaScript files
+- `test`: Node test suite for scheduling rules, role permissions, and assistant intents
+- `build`: copies static mock app into `/dist`
 
-- Horse profiles
-- Health records
-- Vaccination tracking
-- Ride logging
-- Care scheduling
-- Emergency contacts
-- AI ranch assistant (live model later)
-- Pasture management
-- Weight tracking
+## Release staging
 
-## Stack (target)
+1. **Release 1:** Data-backed dashboard + care/task CRUD
+2. **Release 2:** Actionable grounded assistant with safe write confirmations
+3. **Release 3:** Smart recommendations (risk flags and optimization suggestions)
 
-- Astro
-- Node.js
-- PostgreSQL
-- Docker
-- Cloudflare
-- Nginx Proxy Manager
+## Success criteria
+
+- Manual scheduling effort decreases over time
+- No missed critical care events during pilot
+- Assistant action acceptance and correction rates are measurable
