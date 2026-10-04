@@ -1,0 +1,42 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  validate-current-site:
+    name: Validate current static prototype
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Verify required prototype files
+        run: |
+          test -f mock/index.html
+          test -f mock/styles.css
+          test -f mock/app.js
+
+      - name: Check JavaScript syntax
+        run: node --check mock/app.js
+
+      - name: Guard future application CI
+        shell: bash
+        run: |
+          if [ -f package.json ]; then
+            echo "package.json detected. The repository has moved beyond mock-only mode."
+            echo "Extend this workflow with dependency install, lint, test, typecheck, and build commands."
+          else
+            echo "Mock-only repository: package-based checks intentionally skipped."
+          fi
