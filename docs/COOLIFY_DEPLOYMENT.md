@@ -1,28 +1,14 @@
 # HoofMate deployment model
 
-Production domain: https://hoofmate.site
+## Separate production surfaces
+- `hoofmate-landing` owns the marketing website at `https://hoofmate.site`.
+- `hoofmate-app` owns the future application at `https://app.hoofmate.site`.
 
-## Responsibility split
+Use separate Coolify applications, health checks, and release lifecycles. This document records the intended domain split; it does not modify running services or DNS.
 
-- GitHub Actions validates changes and performs security checks.
-- Coolify owns production builds, deployments, container lifecycle, health checks, logs, and rollback.
-- Production should deploy from the repository's `main` branch.
-- Do not store VPS SSH keys in GitHub Actions for normal Coolify deployments.
+## Current application state
+This repo contains a static prototype under `mock/` and no root package.json. Existing CI validates the prototype; production accounts, storage, and live AI are not implemented.
 
-## Current repository state
+When the actual app is scaffolded, extend CI with its real install, test, typecheck, and build commands. Coolify should deploy the application from main after validation, using its native integration or an authenticated deployment webhook. Configure app.hoofmate.site when ready; do not deploy this mock over the marketing website.
 
-The repository is currently a static prototype under `mock/`. There is no root `package.json` yet, so CI intentionally validates the static prototype instead of pretending an Astro/Expo application already exists.
-
-When the real application scaffold is committed, extend `.github/workflows/ci.yml` with the repository's actual install, lint, test, typecheck, and build commands.
-
-## Coolify
-
-Configure the Coolify application to use:
-
-- Repository: `ranchops-gnc/hoofmate-app`
-- Branch: `main`
-- Production domain: `https://hoofmate.site`
-- Automatic deployment: enabled after successful changes are merged to `main`
-- Health checks: enabled once the application exposes a stable health endpoint
-
-Prefer Coolify's native GitHub integration/webhook over a GitHub Actions SSH deployment.
+Coolify owns container lifecycle, health checks, logs, and rollback. Keep tokens and credentials in secrets. The landing repository contains its own Dockerfile and gated Actions deployment instructions.
