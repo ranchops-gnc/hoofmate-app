@@ -1,44 +1,21 @@
 # HoofMate
 
-AI-powered horse management platform built for ranchers, horse owners, trainers, and rodeo competitors.
+**Know Their Hooves. Track Their Story.**
 
-## Mock-only mode (current)
+A hoof-care record and collaboration platform in development for horse owners, farriers, and barn managers.
 
-The DeepSeek share linked from the ChatGPT thread is blocked from this environment (CloudFront 403), so this pass implements the **mock-only AI dashboard** requested there.
+Read the [v1 product brief](docs/HOOFMATE_V1.md) for the workflow, scope, data model proposal, and delivery milestones.
 
-Open the static prototype:
+## Repository boundaries
+- This repository: application prototype and future app at `app.hoofmate.site`.
+- [hoofmate-landing](https://github.com/ranchops-gnc/hoofmate-landing): public website at `hoofmate.site`.
 
-```bash
+## Current prototype
+The `mock/` directory is static sample data with canned AI replies. It has no real accounts, persistent horse records, sharing, or live AI.
+
+```sh
 cd mock
 python3 -m http.server 4173
-# then visit http://localhost:4173
 ```
 
-What is mocked today:
-
-- Horse profile for **Leoti** at Pine Creek Ranch
-- Upcoming care (farrier, dewormer, vaccines, dental)
-- Safety monitor and emergency contacts
-- Ask HoofMate with local canned replies (no live model)
-- Log-a-ride writes a mock note into the chat only
-
-## Planned product features
-
-- Horse profiles
-- Health records
-- Vaccination tracking
-- Ride logging
-- Care scheduling
-- Emergency contacts
-- AI ranch assistant (live model later)
-- Pasture management
-- Weight tracking
-
-## Stack (target)
-
-- Astro
-- Node.js
-- PostgreSQL
-- Docker
-- Cloudflare
-- Nginx Proxy Manager
+The application stack is not yet scaffolded. Keep existing CI for the mock until implementation introduces actual build and test commands. See [deployment model](docs/COOLIFY_DEPLOYMENT.md).
