@@ -36,3 +36,39 @@ jobs:
         run: |
           npm test
           npm run build
+
+  publish-development-image:
+    name: Smoke test and publish development image
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feat/shared-animal-registry'
+    needs: validate-current-site
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      packages: write
+    env:
+      IMAGE: ghcr.io/ranchops-gnc/hoofmate-app-dev
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+
+      - name: Build and smoke test the container
+        run: |
+          docker build --file Dockerfile.dev \
+            --label "org.opencontainers.image.source=${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}" \
+            --label "org.opencontainers.image.revision=${GITHUB_SHA}" \
+            --tag "$IMAGE:$GITHUB_SHA" .
+          docker run --detach --name hoofmate-dev --publish 127.0.0.1:4173:4173 "$IMAGE:$GITHUB_SHA"
+          if ! curl --fail --silent --show-error --retry 10 --retry-connrefused --retry-delay 1 --max-time 3 http://127.0.0.1:4173/healthz; then
+            docker logs hoofmate-dev
+            exit 1
+          fi
+
+      - name: Publish the tested image
+        env:
+          REGISTRY_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          printf '%s' "$REGISTRY_TOKEN" | docker login ghcr.io --username "$GITHUB_ACTOR" --password-stdin
+          docker push "$IMAGE:$GITHUB_SHA"
+          printf 'Development image: `%s:%s`\n' "$IMAGE" "$GITHUB_SHA" >> "$GITHUB_STEP_SUMMARY"
