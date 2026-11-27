@@ -6,9 +6,12 @@
 
 Use separate Coolify applications, health checks, and release lifecycles. This document records the intended domain split; it does not modify running services or DNS.
 
-## Current application state
-This repo contains a static prototype under `mock/` and no root package.json. Existing CI validates the prototype; production accounts, storage, and live AI are not implemented.
+## Development registry
 
-When the actual app is scaffolded, extend CI with its real install, test, typecheck, and build commands. Coolify should deploy the application from main after validation, using its native integration or an authenticated deployment webhook. Configure app.hoofmate.site when ready; do not deploy this mock over the marketing website.
+The registry uses Node.js 24 and a versioned SQLite database. The existing horse dashboard runs at `/mock/`. Registry records and the mock sample data are independent.
 
-Coolify owns container lifecycle, health checks, logs, and rollback. Keep tokens and credentials in secrets. The landing repository contains its own Dockerfile and gated Actions deployment instructions.
+After verifying StarSpur capacity, create a dedicated development application with the Dockerfile build pack and `Dockerfile.dev`. Select a development branch explicitly and leave automatic deploys disabled for the initial verification. The container listens on port 4173 and checks `/healthz`. Attach a dedicated development volume at `/data` with write access for UID 1000. The database path inside the container is `/data/registry.sqlite`.
+
+Use a private network or authenticated gateway and sample records. The development registry has no login. Keep the database volume and any gateway credentials scoped to development. Verify all three species can be created and listed and that records survive a restart. Check CPU, memory, free disk, and the school and production workload baseline before and during the initial build.
+
+Staging needs its own database and credentials. Production release requires authentication, tenant authorization, migration and backup verification, and approval.

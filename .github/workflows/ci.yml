@@ -4,7 +4,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [main]
+    branches: [main, develop, 'feat/**']
   workflow_dispatch:
 
 permissions:
@@ -28,15 +28,11 @@ jobs:
           test -f mock/styles.css
           test -f mock/app.js
 
-      - name: Check JavaScript syntax
-        run: node --check mock/app.js
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
 
-      - name: Guard future application CI
-        shell: bash
+      - name: Test application and validate build
         run: |
-          if [ -f package.json ]; then
-            echo "package.json detected. The repository has moved beyond mock-only mode."
-            echo "Extend this workflow with dependency install, lint, test, typecheck, and build commands."
-          else
-            echo "Mock-only repository: package-based checks intentionally skipped."
-          fi
+          npm test
+          npm run build

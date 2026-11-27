@@ -1,0 +1,11 @@
+FROM node:24-alpine
+WORKDIR /app
+COPY package.json ./
+COPY registry/ ./registry/
+COPY mock/ ./mock/
+ENV HOST=0.0.0.0 PORT=4173 HOOFMATE_DEV_DB=/data/registry.sqlite
+RUN mkdir /data && chown node:node /data
+USER node
+EXPOSE 4173
+HEALTHCHECK CMD node -e "fetch('http://127.0.0.1:4173/healthz').then(r => process.exit(r.ok ? 0 : 1)).catch(() => process.exit(1))"
+CMD ["node", "registry/server.js"]

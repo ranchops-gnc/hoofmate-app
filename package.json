@@ -1,0 +1,11 @@
+{
+  "name": "hoofmate-app",
+  "private": true,
+  "type": "module",
+  "engines": { "node": ">=24" },
+  "scripts": {
+    "start": "node registry/server.js",
+    "test": "node --test",
+    "build": "node --check registry/server.js && node --check registry/client.js && node --check mock/app.js"
+  }
+}

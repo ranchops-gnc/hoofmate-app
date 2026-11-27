@@ -1,0 +1,4 @@
+.git
+.hoofmate-dev
+.env*
+node_modules
